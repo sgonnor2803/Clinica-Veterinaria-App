@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SecureStorageService } from './secure-storage';
 
@@ -18,7 +18,7 @@ export class TokenService {
   private tokenSubject = new BehaviorSubject<string | null>(null);
   public token$ = this.tokenSubject.asObservable();
 
-  constructor(private secureStorage: SecureStorageService) {}
+  private secureStorage = inject(SecureStorageService);
 
   /**
    * 🔐 Guardar token encriptado

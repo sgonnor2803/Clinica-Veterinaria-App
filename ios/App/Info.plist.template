@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- App Transport Security Configuration (OWASP M1 - Insecure Communication) -->
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <!-- Default policy: require HTTPS -->
+    <key>NSAllowsArbitraryLoads</key>
+    <false/>
+    
+    <!-- Domain-specific configurations -->
+    <key>NSExceptionDomains</key>
+    <dict>
+      <!-- API Server with Certificate Pinning -->
+      <key>clinica-veterinaria-api-sgvl.onrender.com</key>
+      <dict>
+        <!-- Allow HTTPS for this domain -->
+        <key>NSIncludesSubdomains</key>
+        <true/>
+        
+        <!-- ✅ CERTIFICATE PINNING CONFIGURATION (Native) -->
+        <!-- 
+             📌 INSTRUCCIONES PARA COMPLETAR:
+             
+             1. Obtener el certificado del servidor:
+                openssl s_client -connect clinica-veterinaria-api-sgvl.onrender.com:443 \
+                  -showcerts 2>/dev/null
+             
+             2. Extraer la public key:
+                openssl x509 -in cert.pem -pubkey -noout > public.key
+             
+             3. Crear hash SHA-256 de la public key:
+                openssl pkey -pubin -outform DER < public.key \
+                  | openssl dgst -sha256 -binary \
+                  | base64
+             
+             4. Reemplazar aquí los valores:
+                PRIMARY_PUBLIC_KEY_HASH
+                BACKUP_PUBLIC_KEY_HASH
+        -->
+        
+        <key>NSPinnedDomains</key>
+        <dict>
+          <key>clinica-veterinaria-api-sgvl.onrender.com</key>
+          <dict>
+            <!-- SHA-256 hashes of public keys (base64 encoded) -->
+            <key>NSPublicKeyHashes</key>
+            <array>
+              <!-- Primary certificate hash -->
+              <string>PRIMARY_PUBLIC_KEY_HASH_BASE64</string>
+              <!-- Backup certificate hash (for rotation) -->
+              <string>BACKUP_PUBLIC_KEY_HASH_BASE64</string>
+            </array>
+            
+            <!-- Validate complete certificate chain -->
+            <key>NSPinnedDomainsCertificateChain</key>
+            <true/>
+            
+            <!-- Allow localhost for development -->
+            <key>NSAllowsLocalNetworking</key>
+            <true/>
+          </dict>
+        </dict>
+        
+        <!-- Require TLS 1.2 or higher -->
+        <key>NSMinimumTLSVersion</key>
+        <string>TLSv1.2</string>
+        
+        <!-- Disable exceptions for this domain -->
+        <key>NSRequiresCertificateTransparency</key>
+        <false/>
+      </dict>
+      
+      <!-- Localhost for development/testing -->
+      <key>localhost</key>
+      <dict>
+        <key>NSIncludesSubdomains</key>
+        <true/>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+      </dict>
+      
+      <key>127.0.0.1</key>
+      <dict>
+        <key>NSIncludesSubdomains</key>
+        <true/>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+      </dict>
+    </NSExceptionDomains>
+    
+    <!-- Require TLS 1.2 globally -->
+    <key>NSMinimumTLSVersion</key>
+    <string>TLSv1.2</string>
+  </dict>
+  
+  <!-- Security Notes -->
+  <!-- 
+       ⚠️ IMPORTANT FOR PRODUCTION:
+       
+       1. NSAppTransportSecurity must be configured in Xcode or via Info.plist
+       2. Certificate pinning prevents MITM attacks even with compromised device CAs
+       3. Always maintain at least one backup certificate hash for rotation
+       4. Test in staging environment before production deployment
+       5. Monitor certificate expiration dates
+       6. Update app before certificate rotation occurs
+       
+       🔐 OWASP Mobile Top 10 Coverage:
+       - M1: Improper Platform Usage (Insecure Communication)
+       - M3: Insecure Communication (Certificate Pinning)
+  -->
+</dict>
+</plist>

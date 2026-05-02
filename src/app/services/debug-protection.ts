@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 /**
@@ -19,8 +19,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DebugProtectionService {
+  private ngZone = inject(NgZone);
 
-  constructor(private ngZone: NgZone) {
+  constructor() {
     if (environment.production) {
       this.disableDebugTools();
       this.overrideConsole();

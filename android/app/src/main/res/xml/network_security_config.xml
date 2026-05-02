@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+  <!-- Default policy for all domains not specified -->
+  <domain-config cleartextTrafficPermitted="false">
+    <trust-anchors>
+      <!-- System CA certificates -->
+      <certificates src="system" />
+    </trust-anchors>
+  </domain-config>
+
+  <!-- API server with certificate pinning -->
+  <domain-config cleartextTrafficPermitted="false">
+    <domain includeSubdomains="true">clinica-veterinaria-api-sgvl.onrender.com</domain>
+    
+    <!-- 📌 PUBLIC KEY PINNING CONFIGURATION
+         
+         INSTRUCCIONES PARA EXTRAER LOS HASHES:
+         
+         openssl s_client -connect clinica-veterinaria-api-sgvl.onrender.com:443 \
+           -showcerts 2>/dev/null \
+           | openssl x509 -noout -pubkey \
+           | openssl rsa -pubin -outform DER \
+           | openssl dgst -sha256 -binary \
+           | base64
+    -->
+    <pin-set expiration="2026-12-31">
+      <!-- Primary certificate pin (SHA-256 hash of public key) -->
+      <!-- TO BE FILLED: Replace with actual server certificate hash -->
+      <pin digest="SHA-256">PRIMARY_PUBLIC_KEY_SHA256_HASH_BASE64</pin>
+      
+      <!-- Backup certificate pin (recommended for certificate rotation) -->
+      <!-- Keep at least one backup pin for rotation without app breakage -->
+      <pin digest="SHA-256">BACKUP_PUBLIC_KEY_SHA256_HASH_BASE64</pin>
+    </pin-set>
+    
+    <!-- Trust system CAs -->
+    <trust-anchors>
+      <certificates src="system" />
+    </trust-anchors>
+  </domain-config>
+
+  <!-- Localhost development (optional) -->
+  <domain-config cleartextTrafficPermitted="true">
+    <domain includeSubdomains="true">localhost</domain>
+    <domain includeSubdomains="true">127.0.0.1</domain>
+    <trust-anchors>
+      <certificates src="system" />
+    </trust-anchors>
+  </domain-config>
+</network-security-config>

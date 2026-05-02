@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
 
@@ -22,8 +22,7 @@ import { App } from '@capacitor/app';
 export class RootDetectionService {
 
   private isDeviceCompromised = false;
-
-  constructor(private platform: Platform) {}
+  private platform = inject(Platform);
 
   /**
    * Verificar si dispositivo está compromised

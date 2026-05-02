@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -14,12 +14,9 @@ import { LoggerService } from '../services/logger';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-
-  constructor(
-    private router: Router,
-    private tokenService: TokenService,
-    private logger: LoggerService
-  ) {}
+  private router = inject(Router);
+  private tokenService = inject(TokenService);
+  private logger = inject(LoggerService);
 
   intercept(
     req: HttpRequest<any>,
