@@ -1,0 +1,80 @@
+<ion-content class="login-content">
+
+  <div class="login-container">
+
+    <!-- HEADER -->
+    <div class="login-header">
+      <div class="logo-circle">
+        <ion-icon name="paw"></ion-icon>
+      </div>
+
+      <h1>Clínica Veterinaria</h1>
+      <p class="subtitle">Cuidamos a tus mascotas con amor</p>
+    </div>
+
+    <!-- FORM -->
+    <form [formGroup]="loginForm" class="login-form">
+
+      <!-- EMAIL -->
+      <ion-item class="custom-item">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+
+        <ion-label position="floating">Email</ion-label>
+
+        <ion-input
+          formControlName="email"
+          type="email"
+          placeholder="tu@email.com">
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger"
+        *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+        <p class="error-text">Ingresa un email válido</p>
+      </ion-text>
+
+      <!-- PASSWORD -->
+      <ion-item class="custom-item">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+
+        <ion-label position="floating">Contraseña</ion-label>
+
+        <ion-input
+          formControlName="password"
+          type="password"
+          placeholder="••••••••">
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger"
+        *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        <p class="error-text">Mínimo 6 caracteres</p>
+      </ion-text>
+
+      <!-- ERROR GLOBAL -->
+      <div *ngIf="errorMessage" class="error-box">
+        <ion-icon name="alert-circle"></ion-icon>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- BUTTON -->
+      <ion-button
+        expand="full"
+        class="login-button"
+        (click)="login()"
+        [disabled]="!loginForm.valid || isLoading">
+
+        <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+        <ng-container *ngIf="!isLoading">
+          <ion-icon name="log-in-outline" slot="start"></ion-icon>
+          Iniciar sesión
+        </ng-container>
+
+      </ion-button>
+
+    </form>
+
+  </div>
+
+</ion-content>

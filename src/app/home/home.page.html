@@ -1,20 +1,85 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border header-custom">
+
   <ion-toolbar>
+
     <ion-title>
-      Blank
+      <div class="header-title">
+        <ion-icon name="paw"></ion-icon>
+        <span>Mi Clínica</span>
+      </div>
     </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" class="logout-btn">
+        <span>➜] Logout</span>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
+
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="home-content">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- BANNER -->
+  <div class="welcome-banner">
+    <h2>¡Bienvenido!</h2>
+    <p>Gestiona todo lo relacionado con tus mascotas</p>
   </div>
+
+  <!-- GRID -->
+  <div class="menu-grid">
+
+    <div class="menu-card" routerLink="/shop">
+      <div class="icon shop">
+        <ion-icon name="bag-handle"></ion-icon>
+      </div>
+      <h3>Tienda</h3>
+      <p>Productos para tus mascotas</p>
+    </div>
+
+    <div class="menu-card" routerLink="/adoptions">
+      <div class="icon adoption">
+        <ion-icon name="heart"></ion-icon>
+      </div>
+      <h3>Adopciones</h3>
+      <p>Encuentra tu nueva mascota</p>
+    </div>
+
+    <div class="menu-card" routerLink="/appointments">
+      <div class="icon appointment">
+        <ion-icon name="calendar"></ion-icon>
+      </div>
+      <h3>Citas</h3>
+      <p>Programa tus consultas</p>
+    </div>
+
+    <div class="menu-card disabled">
+      <div class="icon profile">
+        <ion-icon name="person"></ion-icon>
+      </div>
+      <h3>Mi Perfil</h3>
+      <p>Próximamente</p>
+      <span class="badge">Soon</span>
+    </div>
+
+  </div>
+
+  <!-- INFO -->
+  <div class="info-section">
+
+    <div class="info-card">
+      <ion-icon name="call"></ion-icon>
+      <h4>Contacto</h4>
+      <p>+1 234 567 8900</p>
+    </div>
+
+    <div class="info-card">
+      <ion-icon name="time"></ion-icon>
+      <h4>Horario</h4>
+      <p>Lun-Sab 9:00 - 19:00</p>
+    </div>
+
+  </div>
+
 </ion-content>

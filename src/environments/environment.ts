@@ -3,7 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://clinica-veterinaria-api-sgvl.onrender.com/',
+  apiTimeout: 30000,
+  
+  // 🔒 Configuración de Seguridad
+  security: {
+    enableTokenEncryption: true,      // AES-256 encryption
+    enableRootDetection: true,         // Detectar jailbreak/root
+    enableCertificatePinning: false,   // En dev: disabled
+    enableAntiTampering: false,        // En dev: disabled
+    enableDebugProtection: false,      // En dev: false (permite debugging)
+    enableDevToolsDetection: false     // En dev: false
+  }
 };
 
 /*
@@ -14,3 +26,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+

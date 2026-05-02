@@ -35,3 +35,307 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/**
+ * 🎨 CUSTOM GLOBAL STYLES
+ * ───────────────────────────────────────────────────────────────
+ */
+
+// Color Variables
+:root {
+  --color-primary: #667eea;
+  --color-secondary: #764ba2;
+  --color-danger: #ff6b6b;
+  --color-success: #26de81;
+  --color-warning: #ff9666;
+  --color-light: #f7fafc;
+  --color-dark: #2d3748;
+  --color-border: rgba(102, 126, 234, 0.1);
+}
+
+// Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+p {
+  line-height: 1.6;
+  color: #4a5568;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--color-secondary);
+  }
+}
+
+// Scrollbar Styling
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.4);
+  border-radius: 10px;
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.6);
+  }
+}
+
+// Form Elements
+ion-input,
+ion-textarea,
+ion-select {
+  --padding-start: 0;
+  --padding-end: 0;
+
+  &.custom-input {
+    --color: #2d3748;
+    --placeholder-color: rgba(45, 55, 72, 0.4);
+  }
+}
+
+ion-button {
+  --text-transform: none;
+  font-weight: 600;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Cards
+ion-card {
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+  border: 1px solid var(--color-border);
+
+  ion-card-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  ion-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2d3748;
+  }
+
+  ion-card-content {
+    padding: 20px;
+    font-size: 14px;
+    color: #4a5568;
+  }
+}
+
+// Spinners
+ion-spinner {
+  --color: var(--color-primary);
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Utility Classes
+.ion-no-border {
+  border: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+.rounded {
+  border-radius: 8px;
+}
+
+.rounded-lg {
+  border-radius: 12px;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-lg {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
+
+// Responsive Utilities
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+}
+
+// Dark Mode Support
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-light: #1a202c;
+    --color-dark: #f7fafc;
+  }
+
+  ion-card {
+    background: #2d3748;
+    border-color: rgba(255, 255, 255, 0.1);
+
+    ion-card-title,
+    p {
+      color: #e2e8f0;
+    }
+  }
+
+  a {
+    color: #667eea;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #e2e8f0;
+  }
+}
+
+// Print Styles
+@media print {
+  body {
+    background: white;
+  }
+
+  ion-toolbar,
+  ion-button {
+    display: none;
+  }
+}

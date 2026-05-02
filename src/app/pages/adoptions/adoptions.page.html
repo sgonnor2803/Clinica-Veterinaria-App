@@ -1,0 +1,102 @@
+<ion-header class="ion-no-border header-custom">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="goHome()" class="home-btn">
+        <span>🏠 Home</span>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      <div class="header-title">
+        <ion-icon name="heart"></ion-icon>
+        <span>Adopciones</span>
+      </div>
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="adoptions-content">
+
+  <!-- LOADING -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner></ion-spinner>
+    <p>Cargando mascotas...</p>
+  </div>
+
+  <!-- ERROR -->
+  <div *ngIf="errorMessage" class="error-alert">
+    <ion-icon name="alert-circle"></ion-icon>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- SUCCESS -->
+  <div *ngIf="successMessage" class="success-alert">
+    <ion-icon name="checkmark-circle"></ion-icon>
+    <p>{{ successMessage }}</p>
+  </div>
+
+  <!-- GRID -->
+  <div class="pets-grid" *ngIf="!loading && pets.length > 0">
+
+    <div *ngFor="let pet of pets" class="pet-card" [class.adopted]="pet.adopted">
+
+      <!-- IMAGE -->
+      <div class="pet-image">
+        <ion-icon name="paw"></ion-icon>
+
+        <div class="badge" [class.adopted]="pet.adopted">
+          {{ pet.adopted ? 'Adoptado' : 'Disponible' }}
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div class="pet-info">
+
+        <h3 class="pet-name">{{ pet.name }}</h3>
+
+        <div class="pet-meta">
+
+          <div class="meta-item">
+            <ion-icon name="finger-print"></ion-icon>
+            <span>{{ pet.id | slice:0:8 }}...</span>
+          </div>
+
+          <div class="meta-item">
+            <ion-icon name="person"></ion-icon>
+            <span>{{ pet.adopted ? 'Adoptado' : 'Disponible' }}</span>
+          </div>
+
+        </div>
+
+        <div class="status" [class.adopted]="pet.adopted" [class.available]="!pet.adopted">
+          <ion-icon [name]="pet.adopted ? 'close-circle' : 'checkmark-circle'"></ion-icon>
+          <span>{{ pet.adopted ? 'Ya adoptado' : 'Disponible' }}</span>
+        </div>
+
+        <ion-button
+          expand="block"
+          (click)="adoptPet(pet)"
+          [disabled]="pet.adopted"
+          class="adopt-button">
+
+          <ion-icon name="heart" slot="start"></ion-icon>
+          {{ pet.adopted ? 'Adoptado' : 'Adoptar' }}
+
+        </ion-button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- EMPTY -->
+  <div *ngIf="!loading && pets.length === 0" class="empty-state">
+    <ion-icon name="heart-outline"></ion-icon>
+    <h2>Sin mascotas</h2>
+    <p>No hay mascotas disponibles ahora mismo</p>
+  </div>
+
+</ion-content>

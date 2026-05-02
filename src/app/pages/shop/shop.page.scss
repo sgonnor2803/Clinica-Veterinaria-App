@@ -1,0 +1,228 @@
+/* =========================
+   HEADER
+========================= */
+.header-custom {
+  --background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.25);
+
+  ion-toolbar {
+    --background: transparent;
+    --color: white;
+  }
+
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 20px;
+    color: white;
+
+    ion-icon {
+      font-size: 22px;
+    }
+  }
+
+  .home-btn {
+    --color: white;
+    font-weight: 600;
+    font-size: 14px;
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: white;
+      font-weight: 600;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+/* =========================
+   CONTENT
+========================= */
+.shop-content {
+  --background: #fff6f6;
+}
+
+/* =========================
+   LOADING
+========================= */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  gap: 10px;
+
+  p {
+    font-size: 14px;
+    color: #777;
+  }
+}
+
+/* =========================
+   ALERTS
+========================= */
+.error-alert,
+.success-alert {
+  margin: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.error-alert {
+  background: rgba(255, 80, 80, 0.1);
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  color: #ff4d4d;
+}
+
+.success-alert {
+  background: rgba(40, 200, 120, 0.1);
+  border: 1px solid rgba(40, 200, 120, 0.3);
+  color: #28c878;
+}
+
+/* =========================
+   GRID
+========================= */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 12px;
+}
+
+/* =========================
+   CARD
+========================= */
+.product-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   IMAGE
+========================= */
+.product-image {
+  height: 120px;
+  background: linear-gradient(135deg, #ffe1e1, #ffd1d1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .image-placeholder ion-icon {
+    font-size: 42px;
+    color: rgba(255, 80, 80, 0.25);
+  }
+
+  .discount-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #ff4d4d;
+    color: white;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+}
+
+/* =========================
+   INFO
+========================= */
+.product-info {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.product-name {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  color: black;
+}
+
+.product-description {
+  font-size: 11px;
+  color: #777;
+  margin: 0;
+}
+
+/* =========================
+   PRICE
+========================= */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.original-price {
+  font-size: 11px;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.discount-percent {
+  font-size: 10px;
+  background: #ff4d4d;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.current-price {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ff4d4d;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.buy-button {
+  --background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  --border-radius: 10px;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================
+   EMPTY
+========================= */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+
+  ion-icon {
+    font-size: 60px;
+    color: rgba(255, 80, 80, 0.3);
+  }
+
+  h2 {
+    margin: 10px 0 4px;
+    font-size: 18px;
+    color: #444;
+  }
+
+  p {
+    font-size: 13px;
+  }
+}

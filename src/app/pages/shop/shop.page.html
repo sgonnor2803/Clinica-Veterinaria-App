@@ -1,0 +1,91 @@
+<ion-header class="ion-no-border header-custom">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="goHome()" class="home-btn">
+        <span>🏠 Home</span>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      <div class="header-title">
+        <ion-icon name="bag-handle"></ion-icon>
+        <span>Tienda</span>
+      </div>
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="shop-content">
+
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner></ion-spinner>
+    <p>Cargando productos...</p>
+  </div>
+
+  <div *ngIf="errorMessage && !loading" class="error-alert">
+    <ion-icon name="alert-circle"></ion-icon>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="successMessage" class="success-alert">
+    <ion-icon name="checkmark-circle"></ion-icon>
+    <p>{{ successMessage }}</p>
+  </div>
+
+  <div class="products-grid" *ngIf="!loading && products.length > 0">
+    <div *ngFor="let p of products" class="product-card">
+
+      <div class="product-image">
+        <div class="image-placeholder">
+          <ion-icon name="image"></ion-icon>
+        </div>
+
+        <div *ngIf="p.discountApplied" class="discount-badge">
+          <span>Descuento</span>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h3 class="product-name">{{ p.name }}</h3>
+        <p class="product-description">{{ p.description }}</p>
+
+        <div class="price-section" *ngIf="p.discountApplied; else normalPrice">
+          <div class="price-row">
+            <span class="original-price">
+              {{ p.originalPrice | currency:'EUR':'symbol':'1.0-0' }}
+            </span>
+
+            <span class="discount-percent" *ngIf="p.originalPrice && p.price">
+              -{{ ((p.originalPrice - p.price) / p.originalPrice * 100) | number:'1.0-0' }}%
+            </span>
+          </div>
+
+          <h2 class="current-price">
+            {{ p.price | currency:'EUR':'symbol':'1.0-0' }}
+          </h2>
+        </div>
+
+        <ng-template #normalPrice>
+          <h2 class="current-price">
+            {{ p.price | currency:'EUR':'symbol':'1.0-0' }}
+          </h2>
+        </ng-template>
+
+        <ion-button expand="block" (click)="buyProduct(p)" class="buy-button">
+          <ion-icon name="cart" slot="start"></ion-icon>
+          Comprar
+        </ion-button>
+
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && products.length === 0" class="empty-state">
+    <ion-icon name="bag-handle"></ion-icon>
+    <h2>Sin productos</h2>
+    <p>No hay productos disponibles en este momento</p>
+  </div>
+
+</ion-content>

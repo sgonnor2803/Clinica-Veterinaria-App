@@ -1,0 +1,185 @@
+.header-custom {
+  --background: linear-gradient(135deg, #ff9666 0%, #ff8c42 100%);
+  box-shadow: 0 4px 12px rgba(255, 140, 66, 0.25);
+
+  ion-toolbar {
+    --background: transparent;
+    --color: white;
+  }
+
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .home-btn {
+    --color: white;
+
+    span {
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+}
+
+.adoptions-content {
+  --background: linear-gradient(180deg, #fff9f5 0%, #fff0e6 100%);
+}
+
+/* LOADING */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  gap: 10px;
+}
+
+/* ERROR */
+.error-alert {
+  margin: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 80, 80, 0.1);
+  color: #ff4d4d;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* SUCCESS */
+.success-alert {
+  margin: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(38, 222, 129, 0.12);
+  color: #26de81;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* GRID */
+.pets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 12px;
+}
+
+/* CARD */
+.pet-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transition: 0.2s ease;
+
+  &.adopted {
+    opacity: 0.6;
+  }
+}
+
+/* IMAGE */
+.pet-image {
+  height: 120px;
+  background: linear-gradient(135deg, #fff3eb, #ffe0cc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  ion-icon {
+    font-size: 44px;
+    color: rgba(255, 140, 66, 0.4);
+  }
+
+  .badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    background: #26de81;
+    color: white;
+
+    &.adopted {
+      background: #a0aec0;
+    }
+  }
+}
+
+/* INFO */
+.pet-info {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pet-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: black;
+}
+
+/* META */
+.pet-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #666;
+
+  ion-icon {
+    color: #ff8c42;
+  }
+}
+
+/* STATUS */
+.status {
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  &.available {
+    background: rgba(38, 222, 129, 0.15);
+    color: #26de81;
+  }
+
+  &.adopted {
+    background: rgba(160, 174, 192, 0.15);
+    color: #718096;
+  }
+}
+
+/* BUTTON */
+.adopt-button {
+  --background: linear-gradient(135deg, #ff9666 0%, #ff8c42 100%);
+  --border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  height: 38px;
+}
+
+/* EMPTY */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}

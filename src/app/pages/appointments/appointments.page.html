@@ -1,0 +1,129 @@
+<ion-header class="ion-no-border header-custom">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goHome()" class="home-btn">
+        <span>🏠 Home</span>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="header-title">
+        <ion-icon name="calendar"></ion-icon>
+        <span>Citas</span>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="appointments-content">
+
+  <!-- New Appointment Form -->
+  <div *ngIf="canCreate" class="form-section">
+    <div class="form-card">
+      <h2 class="form-title">
+        <ion-icon name="add-circle"></ion-icon>
+        Agendar cita
+      </h2>
+
+      <div class="form-group">
+        <ion-label class="input-label">
+          <ion-icon name="person"></ion-icon>
+          Veterinario ID
+        </ion-label>
+        <ion-input
+          class="custom-input"
+          [(ngModel)]="vet_id"
+          type="text"
+          placeholder="Ej: 1"
+          clearInput="true">
+        </ion-input>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="input-label">
+          <ion-icon name="calendar"></ion-icon>
+          Fecha
+        </ion-label>
+        <ion-input
+          class="custom-input"
+          [(ngModel)]="date"
+          type="date">
+        </ion-input>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="input-label">
+          <ion-icon name="document-text"></ion-icon>
+          Descripción
+        </ion-label>
+        <ion-textarea
+          class="custom-input"
+          [(ngModel)]="description"
+          placeholder="Describe el motivo de la cita"
+          rows="3">
+        </ion-textarea>
+      </div>
+
+      <ion-button expand="block" (click)="createAppointment()" class="create-btn">
+        <ion-icon name="calendar" slot="start"></ion-icon>
+        Agendar cita
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner></ion-spinner>
+    <p>Cargando citas...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage && !loading" class="error-alert">
+    <ion-icon name="alert-circle"></ion-icon>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="successMessage" class="success-alert">
+    <ion-icon name="checkmark-circle"></ion-icon>
+    <p>{{ successMessage }}</p>
+  </div>
+
+  <!-- Appointments List -->
+  <div class="appointments-list" *ngIf="!loading && appointments.length > 0">
+    <h2 class="section-title">Mis citas</h2>
+    
+    <div *ngFor="let a of appointments" class="appointment-item">
+      <div class="appointment-date">
+        <ion-icon name="calendar"></ion-icon>
+        <span class="date-text">{{ a.date | date:'dd MMM yyyy' }}</span>
+      </div>
+
+      <div class="appointment-details">
+        <h3 class="appointment-title">{{ a.description }}</h3>
+        <div class="appointment-meta">
+          <span class="meta-item">
+            <ion-icon name="person"></ion-icon>
+            {{ a.vet_id || a.user_id || 'Sin asignar' }}
+          </span>
+        </div>
+      </div>
+
+      <ion-icon name="chevron-forward" class="arrow-icon"></ion-icon>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && appointments.length === 0 && !canCreate" class="empty-state">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <h2>Sin citas</h2>
+    <p>No tienes citas agendadas</p>
+  </div>
+
+  <!-- No Appointments and Create Form Exists -->
+  <div *ngIf="!loading && appointments.length === 0 && canCreate" class="empty-state">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <h2>Aún no hay citas</h2>
+    <p>Agenda tu primera cita usando el formulario arriba</p>
+  </div>
+
+</ion-content>
