@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SecureStorageService } from './secure-storage';
+import { AuthService } from './auth';
 
 /**
  * 🔐 TOKEN SERVICE
@@ -19,6 +20,11 @@ export class TokenService {
   public token$ = this.tokenSubject.asObservable();
 
   private secureStorage = inject(SecureStorageService);
+  private authService = inject(AuthService);
+  private refreshing: Promise<boolean> | null = null;
+
+  // Refresh token storage key
+  private readonly REFRESH_KEY = 'refresh_token';
 
   /**
    * 🔐 Guardar token encriptado
@@ -77,6 +83,7 @@ export class TokenService {
     try {
       // 1. Eliminar de Preferences
       await this.secureStorage.removeSecure('auth_token');
+      await this.secureStorage.removeSecure(this.REFRESH_KEY);
       
       // 2. Limpiar BehaviorSubject
       this.tokenSubject.next(null);
@@ -86,5 +93,63 @@ export class TokenService {
       console.error('❌ Error limpiando token:', error);
       throw error;
     }
+  }
+
+  /**
+   * Guardar refresh token en almacenamiento seguro
+   */
+  async setRefreshToken(refreshToken: string): Promise<void> {
+    try {
+      await this.secureStorage.setSecure(this.REFRESH_KEY, refreshToken);
+    } catch (error) {
+      console.error('❌ Error guardando refresh token:', error);
+      throw error;
+    }
+  }
+
+  async getRefreshToken(): Promise<string | null> {
+    try {
+      const token = await this.secureStorage.getSecure(this.REFRESH_KEY);
+      return token || null;
+    } catch (error) {
+      console.error('❌ Error obteniendo refresh token:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Intentar refrescar el token con el backend. Evita llamadas concurrentes.
+   */
+  async attemptRefresh(): Promise<boolean> {
+    // If a refresh is already in progress, return that promise
+    if (this.refreshing) return this.refreshing;
+
+    this.refreshing = (async () => {
+      try {
+        const refreshToken = await this.getRefreshToken();
+        if (!refreshToken) return false;
+
+        const resp: any = await this.authService.refreshToken(refreshToken).toPromise();
+        const newAccess = resp?.session?.accessToken || resp?.accessToken || resp?.token;
+        const newRefresh = resp?.session?.refreshToken || resp?.refreshToken;
+
+        if (newAccess) {
+          await this.setToken(newAccess);
+          if (newRefresh) {
+            await this.setRefreshToken(newRefresh);
+          }
+          return true;
+        }
+
+        return false;
+      } catch (err) {
+        console.error('❌ Error refrescando token:', err);
+        return false;
+      } finally {
+        this.refreshing = null;
+      }
+    })();
+
+    return this.refreshing;
   }
 }

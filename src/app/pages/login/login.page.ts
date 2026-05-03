@@ -67,7 +67,8 @@ export class LoginPage {
           this.logger.log('✅ Login exitoso');
 
           // 🔐 Extraer token JWT
-          const token = res.session?.accessToken;
+          const token = (res as any).session?.accessToken || (res as any).accessToken;
+          const refreshToken = (res as any).session?.refreshToken || (res as any).refreshToken || (res as any).refresh_token;
           if (!token) {
             this.errorMessage = 'Error: No se recibió token del servidor';
             this.isLoading = false;
@@ -80,6 +81,9 @@ export class LoginPage {
           // 1️⃣ Guardar token en TokenService (que ya lo guarda en Preferences)
           // IMPORTANTE: ESPERAR A QUE COMPLETE ANTES DE NAVEGAR
           await this.tokenService.setToken(token);
+          if (refreshToken) {
+            await this.tokenService.setRefreshToken(refreshToken);
+          }
           this.logger.log('✅ Token guardado de forma segura');
 
           // 2️⃣ Guardar rol en Preferences para RBAC

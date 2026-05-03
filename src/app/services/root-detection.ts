@@ -1,5 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Platform } from '@ionic/angular';
+// Native root detection plugin (if available)
+// We integrate with 'cordova-plugin-root-detection' or similar via Capacitor.
+declare const RootDetectionPlugin: any;
 import { App } from '@capacitor/app';
 
 /**
@@ -23,6 +26,24 @@ export class RootDetectionService {
 
   private isDeviceCompromised = false;
   private platform = inject(Platform);
+
+  /**
+   * Método nativo (si plugin disponible) para detectar root/jailbreak
+   */
+  async isDeviceRootedNative(): Promise<boolean> {
+    try {
+      if ((window as any).Capacitor && typeof (window as any).RootDetection !== 'undefined') {
+        const result = await (window as any).RootDetection.isRooted();
+        return !!result;
+      }
+
+      // Plugin no disponible
+      return false;
+    } catch (error) {
+      console.warn('Root detection native error:', error);
+      return false;
+    }
+  }
 
   /**
    * Verificar si dispositivo está compromised

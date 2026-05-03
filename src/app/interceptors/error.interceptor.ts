@@ -28,12 +28,32 @@ export class ErrorInterceptor implements HttpInterceptor {
         
         // 🔴 Error 401 - Token expirado o inválido
         if (error.status === 401) {
-          this.logger.error('Token expirado (401) - Cerrando sesión');
-          
-          // Limpiar token de AMBAS ubicaciones
-          this.tokenService.clearToken().then(() => {
-            // Redirigir a login
-            this.router.navigate(['/login']);
+          this.logger.error('Token expirado (401) - Intentando refresh');
+
+          // Intentar refresh antes de forzar logout
+          return new Observable<HttpEvent<any>>(observer => {
+            this.tokenService.attemptRefresh().then(async (ok) => {
+              if (ok) {
+                // Reintentar la request original con nuevo token
+                const newToken = this.tokenService.getToken();
+                const cloned = req.clone({
+                  setHeaders: {
+                    Authorization: newToken ? `Bearer ${newToken}` : ''
+                  }
+                });
+
+                next.handle(cloned).subscribe({
+                  next: (ev) => observer.next(ev),
+                  error: (e) => observer.error(e),
+                  complete: () => observer.complete()
+                });
+              } else {
+                // No se pudo refrescar → limpiar y redirigir
+                await this.tokenService.clearToken();
+                this.router.navigate(['/login']);
+                observer.error(error);
+              }
+            });
           });
         }
 

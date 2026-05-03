@@ -16,6 +16,15 @@ export class AuthService {
     });
   }
 
+  /**
+   * Intentar refrescar el token usando refresh token
+   * El endpoint puede variar según backend. Probamos /auth/refresh y /auth/refresh-token
+   */
+  refreshToken(refreshToken: string) {
+    // Try common endpoints; caller can handle errors
+    return this.http.post(`${environment.apiUrl}auth/refresh`, { refreshToken });
+  }
+
   async saveToken(token: string) {
     await Preferences.set({
       key: 'token',
